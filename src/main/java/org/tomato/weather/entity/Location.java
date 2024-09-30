@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "Locations")
 @Data
@@ -20,9 +22,12 @@ public class Location {
 
     private String name;
 
-    private Double latitude;
+    @Column(name = "latitude", precision = 10, scale = 8)
+    private BigDecimal latitude;
 
-    private Double longitude;
+    @Column(name = "longitude", precision = 10, scale = 8)
+    private BigDecimal longitude;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
