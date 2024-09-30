@@ -2,36 +2,38 @@ package org.tomato.weather.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "Locations")
+@Table(
+        name = "locations",
+        indexes = {
+                @Index(name = "user_id_idx", columnList = "user_id")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "latitude", "longitude"})
+        })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Location {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
-    @Column(name = "latitude", precision = 10, scale = 8)
-    private BigDecimal latitude;
-
-    @Column(name = "longitude", precision = 10, scale = 8)
-    private BigDecimal longitude;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    private Double latitude;
+    private Double longitude;
 
-
+    public Location(String name, Double latitude, Double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

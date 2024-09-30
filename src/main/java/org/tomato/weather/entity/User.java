@@ -1,35 +1,28 @@
 package org.tomato.weather.entity;
 
-
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {@Index(name = "login_idx", columnList = "login")})
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "login", unique = true)
+    @Column(unique = true, nullable = false)
     private String login;
-
+    @Column(nullable = false)
     private String password;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    @ToString.Exclude
-    private Session session;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    private List<Location> locations;
-
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 }
