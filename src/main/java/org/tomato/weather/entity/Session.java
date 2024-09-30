@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "sessions")
@@ -19,8 +20,8 @@ public class Session {
 
     // GUID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     private Date expiresAt;
 
