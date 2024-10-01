@@ -19,11 +19,12 @@ import java.util.UUID;
 @Table(name = "sessions", indexes = {@Index(name = "expires_at_idx", columnList = "expires_at")})
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Session {
     @Id
     private String id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
