@@ -7,8 +7,12 @@ import org.tomato.weather.util.HibernateUtil;
 import java.util.Optional;
 
 public class UserRepository extends BaseRepository<Long, User>{
-    public UserRepository(Class<User> clazz) {
+    private UserRepository(Class<User> clazz) {
         super(clazz);
+    }
+
+    private UserRepository(){
+        super(User.class);
     }
 
     private static final UserRepository INSTANCE = new UserRepository(User.class);
