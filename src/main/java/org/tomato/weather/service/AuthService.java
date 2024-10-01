@@ -1,17 +1,22 @@
 package org.tomato.weather.service;
 
 import lombok.RequiredArgsConstructor;
+import org.tomato.weather.dao.SessionRepository;
 import org.tomato.weather.dao.UserRepository;
 import org.tomato.weather.dto.UserDto;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.mappers.UserMapper;
 
-public class RegistrationService {
-    private final static  RegistrationService INSTANCE = new RegistrationService();
+import java.util.UUID;
+
+public class AuthService {
+    private final static  AuthService INSTANCE = new AuthService();
 
     private final UserRepository userRepository = UserRepository.getInstance();
+    private final SessionRepository sessionRepository = SessionRepository.getInstance();
 
-    public static RegistrationService getInstance() {
+
+    public static AuthService getInstance() {
         return INSTANCE;
     }
 
@@ -20,5 +25,9 @@ public class RegistrationService {
                         .login(user.login())
                         .password(user.password())
                 .build());
+    }
+
+    public void logout(String sessionId) {
+        sessionRepository.delete(sessionId);
     }
 }
