@@ -17,7 +17,7 @@ import org.tomato.weather.util.ThymeleafUtil;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet("/registration") // Исправленный URL-адрес
+@WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
     private TemplateEngine templateEngine;
     private final RegistrationService registrationService = RegistrationService.getInstance();
@@ -43,11 +43,11 @@ public class RegistrationServlet extends HttpServlet {
                     .login(login)
                     .password(password)
                     .build());
-            logger.info("Пользователь успешно зарегистирован: " + user.getLogin()); //  Используем логгер
+            logger.info("Пользователь успешно зарегистирован: " + user.getLogin());
 
-            resp.sendRedirect(req.getContextPath() + "/success"); // Перенаправление на страницу успеха
+            resp.sendRedirect(req.getContextPath() + "/login");
         } catch (Exception e) {
-            logger.severe("Ошибка при регистрации: " + e.getMessage()); //  Используем логгер для записи ошибок
+            logger.severe("Ошибка при регистрации: " + e.getMessage());
 
             WebContext context = ThymeleafUtil.buildWebContext(req, resp, getServletContext());
             context.setVariable("error", e.getMessage());
