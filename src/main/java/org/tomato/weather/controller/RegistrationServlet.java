@@ -13,6 +13,7 @@ import org.tomato.weather.entity.User;
 import org.tomato.weather.service.AuthService;
 import org.tomato.weather.util.PasswordUtil;
 import org.tomato.weather.util.ThymeleafUtil;
+import org.tomato.weather.validator.PasswordValidator;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -36,7 +37,13 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
+
         String password = PasswordUtil.hashPassword(req.getParameter("pwd"));
+        var list = PasswordValidator.validatePassword(password);
+        if (!list.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + "/registration");
+            return;
+        }
 
         try {
             User user = authService.registration(UserDto.builder()
