@@ -1,17 +1,21 @@
 package org.tomato.weather.service;
 
 import jakarta.servlet.http.Cookie;
+import org.hibernate.exception.ConstraintViolationException;
 import org.tomato.weather.dao.SessionRepository;
 import org.tomato.weather.entity.Session;
 import org.tomato.weather.entity.User;
+import org.tomato.weather.exception.SessionDuplicateException;
+import org.tomato.weather.exception.SessionNotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 public class CookieAndSessionService {
     private final SessionRepository sessionRepository = SessionRepository.getInstance();
-    private final int hoursLiveSession = 15;
+    public final static int hoursLiveSession = 15;
     private final static CookieAndSessionService INSTANCE = new CookieAndSessionService();
     private CookieAndSessionService(){}
 
@@ -33,10 +37,37 @@ public class CookieAndSessionService {
             Session session1 = sessionRepository.save(session);
             return new Cookie("SESSION_ID", session1.getId());
         }
-        catch (Exception e){
-            e.printStackTrace();;
-            throw  e;
+        catch (ConstraintViolationException e){
+            throw new SessionDuplicateException();
         }
 
     }
+
+    public Optional<Cookie> findAndUpdateSessionByUserId(User user) {
+        Optional<Session> session = sessionRepository.findUpdateByUser(user);
+        return session.map(value -> new Cookie("SESSION_ID", value.getId()));
+
+    }
+    public String findCookie(Cookie[] cookies) {
+        for (Cookie cookie : cookies) {
+            if ("SESSION_ID".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+
+    }
+    public boolean sessionIsValidate(String sessionID){
+        Optional<Session> optionalSession = sessionRepository.findById(sessionID);
+        if (optionalSession.isPresent()){
+            Session session1 = optionalSession.get();
+            if (LocalDateTime.now().isAfter(session1.getExpiresAt())){
+                sessionRepository.delete(sessionID);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
