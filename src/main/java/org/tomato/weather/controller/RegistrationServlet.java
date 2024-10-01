@@ -10,7 +10,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.tomato.weather.dto.UserDto;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.service.RegistrationService;
+import org.tomato.weather.service.AuthService;
 import org.tomato.weather.util.PasswordUtil;
 import org.tomato.weather.util.ThymeleafUtil;
 
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
     private TemplateEngine templateEngine;
-    private final RegistrationService registrationService = RegistrationService.getInstance();
+    private final AuthService authService = AuthService.getInstance();
     private static final Logger logger = Logger.getLogger(RegistrationServlet.class.getName()); // Логгер
 
 
@@ -39,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = PasswordUtil.hashPassword(req.getParameter("pwd"));
 
         try {
-            User user = registrationService.registration(UserDto.builder()
+            User user = authService.registration(UserDto.builder()
                     .login(login)
                     .password(password)
                     .build());
