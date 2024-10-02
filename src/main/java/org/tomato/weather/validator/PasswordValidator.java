@@ -1,30 +1,53 @@
 package org.tomato.weather.validator;
 
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import org.tomato.weather.validator.annotation.ValidPassword;
+
 import java.util.ArrayList;
 import java.util.List;
+public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
-public class PasswordValidator {
-    public static List<String> validatePassword(String password){
-
-        List<String> errorMes = new ArrayList<>();
-        if (password.length() < 8){
-            errorMes.add("Пароль должен содержать не менее 8 символов");
-        }
-        if (!password.matches(".*[A-Z].*")){
-            errorMes.add("Пароль должен содержать заглавные буквы (A-Z)");
-        }
-        if (!password.matches(".*[a-z].*")){
-            errorMes.add("Пароль должен содержать строчные буквы (a-z)");
-        }
-        if (!password.matches(".*[0-9].*")){
-            errorMes.add("Пароль должен содержать строчные цифры (0-9)");
-        }
-        if (! password.matches("""
-.*[!@#$%^&*().].*""")){
-            errorMes.add("Пароль должен содержать специальные символы цифры - !@#$%^&*().,");
-        }
-        return errorMes;
+    @Override
+    public void initialize(ValidPassword constraintAnnotation) {
     }
-}
 
+    @Override
+    public boolean isValid(String password, ConstraintValidatorContext context) {
+        List<String> errorMessages = new ArrayList<>();
+
+        if (password == null) {
+            errorMessages.add("Пароль не может быть пустым.");
+        } else {
+            if (password.length() < 8) {
+                errorMessages.add("Пароль должен содержать не менее 8 символов.");
+            }
+            if (!password.matches(".*[A-Z].*")) {
+                errorMessages.add("Пароль должен содержать заглавные буквы (A-Z).");
+            }
+            if (!password.matches(".*[a-z].*")) {
+                errorMessages.add("Пароль должен содержать строчные буквы (a-z).");
+            }
+            if (!password.matches(".*[0-9].*")) {
+                errorMessages.add("Пароль должен содержать цифры (0-9).");
+            }
+            if (!password.matches(".*[!@#$%^&*().].*")) {
+                errorMessages.add("Пароль должен содержать специальные символы - !@#$%^&*().");
+            }
+        }
+
+        if (!errorMessages.isEmpty()) {
+            context.disableDefaultConstraintViolation();
+            for (String message : errorMessages) {
+                context.buildConstraintViolationWithTemplate(message)
+                        .addConstraintViolation();
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+
+}
