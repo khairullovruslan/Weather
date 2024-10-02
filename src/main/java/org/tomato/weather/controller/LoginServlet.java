@@ -16,6 +16,8 @@ import org.tomato.weather.util.PasswordUtil;
 import org.tomato.weather.util.ThymeleafUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/login")
@@ -32,9 +34,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        WebContext context = ThymeleafUtil.buildWebContext(req, resp, getServletContext());
         String login = req.getParameter("login");
         String password = req.getParameter("pwd");
-        User user = loginService.findUserByLogin(login);
+        Optional<User> optionalUser = loginService.findUserByLogin(login);
+        if (optionalUser.isEmpty()){
+            context.setVariable("errorList", new ArrayList<>(List.of("Пользователя с таким Login не был найден. Попробуйте еще раз")));
+            templateEngine.process("login", context, resp.getWriter());
+            return;
+        }
+        User user = optionalUser.get();
         if (PasswordUtil.checkPassword(password, user.getPassword())){
             Cookie cookie;
             try {
@@ -47,7 +56,8 @@ public class LoginServlet extends HttpServlet {
                     cookie = cookieOptional.get();
                 }
                 else {
-                    resp.sendRedirect(req.getContextPath() + "/login");
+                    context.setVariable("errorList", new ArrayList<>(List.of("Ваша сессия была завершена, войдите еще раз")));
+                    templateEngine.process("login", context, resp.getWriter());
                     return;
                 }
             }
@@ -55,7 +65,8 @@ public class LoginServlet extends HttpServlet {
             resp.addCookie(cookie);
         }
         else {
-           resp.sendRedirect("/login");
+            context.setVariable("errorList", new ArrayList<>(List.of("Неверный пароль. Попробуйте еще раз")));
+            templateEngine.process("login", context, resp.getWriter());
         }
 
     }
