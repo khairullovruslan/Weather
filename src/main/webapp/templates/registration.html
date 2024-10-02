@@ -3,21 +3,37 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Регистрация</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-<form th:action="@{/registration}" method="post">
-    <label for="login">login:
-        <input type="text" id="login" name="login">
-    </label>
+<div class="container mt-5">
+    <h2 class="text-center">Регистрация</h2>
+    <form th:action="@{/registration}" method="post" class="was-validated">
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" class="form-control" id="login" name="login" required>
+            <div class="invalid-feedback">Пожалуйста, введите ваш логин.</div>
+        </div>
 
-    <label for="pwd">password:
-        <input type="password" name="pwd" id="pwd">
-    </label>
-    <input type="submit" value="Send">
+        <div class="form-group">
+            <label for="pwd">Пароль:</label>
+            <input type="password" class="form-control" id="pwd" name="pwd" required>
+            <div class="invalid-feedback">Пожалуйста, введите ваш пароль.</div>
+        </div>
+        <div th:if="${not #lists.isEmpty(errorList)}" class="alert alert-danger" role="alert">
+            <ul>
+                <li th:each="error : ${errorList}" th:text="${error}"></li>
+            </ul>
+        </div>
 
+        <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+    </form>
+</div>
 
-</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
