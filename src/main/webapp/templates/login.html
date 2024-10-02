@@ -3,21 +3,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Вход в сервис погоды</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
+
 <body>
-<form th:action="@{/login}" method="post">
-    <label for="login">login:
-        <input type="text" id="login" name="login">
-    </label>
+<div class="login-container mt-5">
+    <h2 class="text-center">Вход в сервис погоды</h2>
+    <form th:action="@{/login}" method="post" class="was-validated">
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" class="form-control" id="login" name="login" required>
+            <div class="invalid-feedback">Пожалуйста, введите ваш логин.</div>
+        </div>
 
-    <label for="pwd">password:
-        <input type="password" name="pwd" id="pwd">
-    </label>
-    <input type="submit" value="Send">
+        <div class="form-group">
+            <label for="pwd">Пароль:</label>
+            <input type="password" class="form-control" id="pwd" name="pwd" required>
+            <div class="invalid-feedback">Пожалуйста, введите ваш пароль.</div>
+        </div>
 
+        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+    </form>
+</div>
 
-</form>
+<!-- Подключение Bootstrap JS и зависимостей -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
