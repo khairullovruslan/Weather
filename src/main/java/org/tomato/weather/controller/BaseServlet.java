@@ -5,10 +5,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.tomato.weather.exception.ServletInitializationException;
+import org.tomato.weather.util.ExceptionHandler;
 import org.tomato.weather.util.ThymeleafUtil;
 
 import java.io.IOException;
@@ -17,19 +22,25 @@ import java.util.List;
 
 @Slf4j
 public abstract class BaseServlet extends HttpServlet {
-    private TemplateEngine templateEngine;
+    protected TemplateEngine templateEngine;
+    private ExceptionHandler exceptionHandler;
+    protected Validator validator;
     @Override
     public void init(){
-        templateEngine =  (TemplateEngine) this.getServletContext().getAttribute("templateEngine");
+        try (var validatorFactory = Validation.buildDefaultValidatorFactory()){
+            validator = validatorFactory.getValidator();
+            templateEngine =(TemplateEngine) this.getServletContext().getAttribute("templateEngine");
+            exceptionHandler =  new ExceptionHandler(templateEngine, this.getServletContext());
+        } catch (Exception e) {
+            exceptionHandler.handle(new ServletInitializationException("Failed to initialize a servlet", e));
+        }
+
     }
 
     @SneakyThrows
-    protected void processTemplate(String templateName, HttpServletRequest request, HttpServletResponse response, List<String> errorList){
+    protected void processTemplate(String templateName, HttpServletRequest request, HttpServletResponse response){
         WebContext context = ThymeleafUtil.buildWebContext(request, response, getServletContext());
         log.info("Processing template: {}", templateName);
-        if (!errorList.isEmpty()){
-            context.setVariable("errorList", errorList);
-        }
         templateEngine.process(templateName, context, response.getWriter());
     }
 
@@ -39,13 +50,10 @@ public abstract class BaseServlet extends HttpServlet {
         try {
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
-
             super.service(req, resp);
             log.info("Successfully processed {} request for {}", req.getMethod(), req.getServletPath());
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-//            exceptionHandler.handle(e, req, resp);
+            exceptionHandler.handle(e, req, resp);
         }
     }
 }
