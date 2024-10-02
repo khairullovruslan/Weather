@@ -1,4 +1,4 @@
-package org.tomato.weather.controller;
+package org.tomato.weather.controller.auth;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
