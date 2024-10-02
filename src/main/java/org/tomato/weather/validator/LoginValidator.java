@@ -3,6 +3,7 @@ package org.tomato.weather.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.tomato.weather.exception.LoginNotFoundException;
 import org.tomato.weather.service.LoginService;
 import org.tomato.weather.validator.annotation.ValidLogin;
 
@@ -11,14 +12,16 @@ public class LoginValidator implements ConstraintValidator<ValidLogin, String> {
 
     @Override
     public boolean isValid(String login, ConstraintValidatorContext context) {
-        if (loginService.findUserByLogin(login).isPresent()) {
+        try {
+            loginService.findUserByLogin(login);
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("Пользватель с таким логином уже зарегистрирован")
                     .addConstraintViolation();
             return false;
         }
-
-        return true;
+        catch (LoginNotFoundException e){
+            return true;
+        }
     }
 
 
