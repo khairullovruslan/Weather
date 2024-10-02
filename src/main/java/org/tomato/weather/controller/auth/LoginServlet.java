@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import org.tomato.weather.controller.BaseServlet;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.exception.SessionDuplicateException;
 import org.tomato.weather.service.CookieAndSessionService;
@@ -21,15 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
     private final LoginService loginService = LoginService.getInstance();
     private final CookieAndSessionService cookieAndSessionService = CookieAndSessionService.getInstance();
-    private  TemplateEngine templateEngine;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        templateEngine = (TemplateEngine) req.getServletContext().getAttribute("templateEngine");
-        WebContext context = ThymeleafUtil.buildWebContext(req, resp, getServletContext());
-        templateEngine.process("login", context, resp.getWriter());
+        processTemplate("login", req, resp, new ArrayList<>());
     }
 
     @Override
@@ -39,8 +38,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("pwd");
         Optional<User> optionalUser = loginService.findUserByLogin(login);
         if (optionalUser.isEmpty()){
-            context.setVariable("errorList", new ArrayList<>(List.of("Пользователя с таким Login не был найден. Попробуйте еще раз")));
-            templateEngine.process("login", context, resp.getWriter());
+            processTemplate("login", req, resp,  new ArrayList<>(List.of("Пользователя с таким Login не был найден. Попробуйте еще раз")));
             return;
         }
         User user = optionalUser.get();
@@ -56,8 +54,7 @@ public class LoginServlet extends HttpServlet {
                     cookie = cookieOptional.get();
                 }
                 else {
-                    context.setVariable("errorList", new ArrayList<>(List.of("Ваша сессия была завершена, войдите еще раз")));
-                    templateEngine.process("login", context, resp.getWriter());
+                    processTemplate("login", req, resp,   new ArrayList<>(List.of("Ваша сессия была завершена, войдите еще раз")));
                     return;
                 }
             }
@@ -65,8 +62,7 @@ public class LoginServlet extends HttpServlet {
             resp.addCookie(cookie);
         }
         else {
-            context.setVariable("errorList", new ArrayList<>(List.of("Неверный пароль. Попробуйте еще раз")));
-            templateEngine.process("login", context, resp.getWriter());
+            processTemplate("login", req, resp,   new ArrayList<>(List.of("Неверный пароль. Попробуйте еще раз")));
         }
 
     }
