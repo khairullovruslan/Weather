@@ -38,6 +38,11 @@
             <input type="password" class="form-control" id="pwd" name="pwd" required>
             <div class="invalid-feedback">Пожалуйста, введите ваш пароль.</div>
         </div>
+        <div th:if="${not #lists.isEmpty(errorList)}" class="alert alert-danger" role="alert">
+            <ul>
+                <li th:each="error : ${errorList}" th:text="${error}"></li>
+            </ul>
+        </div>
 
         <button type="submit" class="btn btn-primary btn-block">Войти</button>
     </form>
