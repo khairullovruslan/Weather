@@ -35,7 +35,9 @@ public class CookieAndSessionService {
                 .build();
         try {
             Session session1 = sessionRepository.save(session);
-            return new Cookie("SESSION_ID", session1.getId());
+            Cookie cookie = new Cookie("SESSION_ID", session1.getId());
+            cookie.setMaxAge(60 * 60 * 5);
+            return cookie;
         }
         catch (ConstraintViolationException e){
             throw new SessionDuplicateException();
@@ -43,9 +45,13 @@ public class CookieAndSessionService {
 
     }
 
-    public Optional<Cookie> findAndUpdateSessionByUserId(User user) {
+    public Cookie findAndUpdateSessionByUserId(User user) {
         Optional<Session> session = sessionRepository.findUpdateByUser(user);
-        return session.map(value -> new Cookie("SESSION_ID", value.getId()));
+        if (session.isPresent()){
+            return new Cookie("SESSION_ID", session.get().getId());
+        }
+        throw new SessionNotFoundException();
+
 
     }
     public String findCookie(Cookie[] cookies) {
