@@ -2,6 +2,7 @@ package org.tomato.weather.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.OnDeleteAction;
                 @UniqueConstraint(columnNames = {"user_id", "latitude", "longitude"})
         })
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Location {
