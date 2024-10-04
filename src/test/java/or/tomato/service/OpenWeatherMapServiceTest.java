@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.Location;
+import org.tomato.weather.exception.LocationNotFoundException;
+import org.tomato.weather.exception.LoginDuplicateException;
+import org.tomato.weather.exception.WeatherNotFoundException;
 import org.tomato.weather.service.OpenWeatherMapService;
 
 import java.io.IOException;
@@ -77,5 +80,33 @@ public class OpenWeatherMapServiceTest {
         for (LocationDTO locationDTO: locationDTOList){
             assertTrue(locationDTO.getName().contains("Kazan") || locationDTO.getName().contains("kazan"));
         }
+    }
+
+    @Test
+    void testGetWeather_throwsException() throws IOException, InterruptedException {
+        when(httpResponseMock.statusCode()).thenReturn(404);
+        when(httpClientMock.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenReturn(httpResponseMock);
+
+        Location location = Location
+                .builder()
+                .latitude(55.7887)
+                .longitude(49.1221)
+                .name("Kazan").build();
+
+        assertThrows(
+                WeatherNotFoundException.class,
+                () -> openWeatherApiService.getWeather(location));
+    }
+
+    @Test
+    void testGetLocation_throwsException() throws IOException, InterruptedException {
+        when(httpResponseMock.statusCode()).thenReturn(404);
+        when(httpClientMock.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenReturn(httpResponseMock);
+
+        assertThrows(
+                LocationNotFoundException.class,
+                () -> openWeatherApiService.getCityByName("Kazan"));
     }
 }
