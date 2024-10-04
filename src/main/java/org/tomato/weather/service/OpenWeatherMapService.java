@@ -19,9 +19,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class OpenWeatherMapService {
-    private static final HttpClient httpClient = HttpClient.newHttpClient();
-    private final static ObjectMapper objectMapper = new ObjectMapper();
-    private static final String KEY = System.getenv("api_key");
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final  ObjectMapper objectMapper = new ObjectMapper();
+    private final String KEY = System.getenv("api_key");
     private static final String HTTP_REQUEST_GET_CITY_BY_NAME = "http://api.openweathermap.org/geo/1.0/direct?q=%s&limit=5&appid=%s&lang=en&units=metric";
     private static final String HTTP_REQUEST_GET_WEATHER = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s&lang=en&units=metric";
 
@@ -32,6 +32,7 @@ public class OpenWeatherMapService {
         if (response.statusCode() == 200) {
             WeatherDTO weatherDTO = objectMapper.readValue(response.body(), WeatherDTO.class);
             weatherDTO.setName(location.getName());
+            return weatherDTO;
         }
         throw new WeatherNotFoundException();
     }
