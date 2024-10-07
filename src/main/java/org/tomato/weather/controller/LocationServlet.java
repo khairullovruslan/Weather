@@ -26,7 +26,7 @@ import java.util.Map;
 
 @WebServlet("/location")
 public class LocationServlet extends BaseServlet {
-    private final OpenWeatherMapService openWeatherMapService = new OpenWeatherMapService();
+    private final OpenWeatherMapService openWeatherMapService = OpenWeatherMapService.getInstance();
     private final CookieAndSessionService cookieAndSessionService = CookieAndSessionService.getInstance();
     private final LocationService locationService = LocationService.getInstance();
     private final AjaxExceptionHandler handler = AjaxExceptionHandler.getInstance();
@@ -40,7 +40,7 @@ public class LocationServlet extends BaseServlet {
         Map<LocationDTO, WeatherDTO> weatherDTOS = openWeatherMapService.getWeatherList(locationDTOList);
         WebContext context = ThymeleafUtil.buildWebContext(req, resp, getServletContext());
         context.setVariable("weathers", weatherDTOS);
-        processTemplate(context, "locations-view", resp);
+        processTemplate(context, "locations-view", req,  resp);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class LocationServlet extends BaseServlet {
         try {
             User user = cookieAndSessionService.findUserByCookie(req.getCookies());
             locationService.saveLocation(user, locationDTO);
-            ajaxUtil.senderRespUrl(req.getContextPath() + "/page", resp);
+            ajaxUtil.senderRespUrl(req.getContextPath() + "/home", resp);
         } catch (Exception e) {
             handler.handle(e, req, resp);
         }
