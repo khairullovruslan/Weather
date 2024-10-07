@@ -32,7 +32,7 @@
                         <strong>Скорость ветра:</strong> <span th:text="${entry.value.wind.speed} + ' м/с'"></span>
                     </p>
 
-                    <button class="btn btn-primary saveWeatherBtn"
+                    <button th:if="${!entry.key.theUserHas}" class="btn btn-primary saveWeatherBtn"
                             th:data-name="${entry.key.name}"
                             th:data-country="${entry.key.country}"
                             th:data-state="${entry.key.state != null ? entry.key.state : ''}"
