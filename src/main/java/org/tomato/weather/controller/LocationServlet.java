@@ -2,7 +2,6 @@ package org.tomato.weather.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +10,7 @@ import org.thymeleaf.context.WebContext;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.User;
+import org.tomato.weather.exception.SessionNotFoundException;
 import org.tomato.weather.service.CookieAndSessionService;
 import org.tomato.weather.service.LocationService;
 import org.tomato.weather.service.OpenWeatherMapService;
@@ -35,16 +35,31 @@ public class LocationServlet extends BaseServlet {
     @Override
     @SneakyThrows
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-
-        List<LocationDTO> locationDTOList = openWeatherMapService.getCityByName(LocationUtil.getInstance().convertRequestToLocationName(req));
+        String name = LocationUtil.getInstance().convertRequestToLocationName(req);
+        List<LocationDTO> locationDTOList = openWeatherMapService.getCityByName(name);
         Map<LocationDTO, WeatherDTO> weatherDTOS = openWeatherMapService.getWeatherList(locationDTOList);
         WebContext context = ThymeleafUtil.buildWebContext(req, resp, getServletContext());
+        List<LocationDTO> locations;
+        try {
+            User user = cookieAndSessionService.findUserByCookie(req.getCookies());
+
+            locations = locationService.findByUserAndName(user, name);
+            for (LocationDTO locationDTO : weatherDTOS.keySet()){
+                if (locations.contains(locationDTO)){
+                    locationDTO.setTheUserHas(true);
+                    weatherDTOS.put(locationDTO, weatherDTOS.get(locationDTO));
+                }
+            }
+
+        } catch (SessionNotFoundException ignored) {
+        }
+
         context.setVariable("weathers", weatherDTOS);
         processTemplate(context, "locations-view", req,  resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         LocationDTO locationDTO = objectMapper.readValue(req.getInputStream(), LocationDTO.class);
         try {
