@@ -63,17 +63,8 @@ public class CookieAndSessionService {
         return null;
 
     }
-    public boolean sessionIsValidate(String sessionID){
-        Optional<Session> optionalSession = sessionRepository.findById(sessionID);
-        if (optionalSession.isPresent()){
-            Session session1 = optionalSession.get();
-            if (LocalDateTime.now().isAfter(session1.getExpiresAt())){
-                sessionRepository.delete(sessionID);
-                return false;
-            }
-            return true;
-        }
-        return false;
+    public boolean sessionIsValidate(Session session){
+        return LocalDateTime.now().isAfter(session.getExpiresAt());
     }
 
     public User findUserByCookie(Cookie[] cookies) {
@@ -81,7 +72,10 @@ public class CookieAndSessionService {
             if ("SESSION_ID".equals(cookie.getName())) {
                 Optional<Session> session = sessionRepository.findById(cookie.getValue());
                 if (session.isPresent()){
-                    return session.get().getUser();
+                    if (sessionIsValidate(session.get())){
+                        return session.get().getUser();
+                    }
+                    sessionRepository.cleanSession();
                 }
                 throw new SessionNotFoundException();
             }
