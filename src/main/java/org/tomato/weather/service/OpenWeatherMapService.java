@@ -26,6 +26,12 @@ public class OpenWeatherMapService {
     private final String KEY = System.getenv("api_key");
     private static final String HTTP_REQUEST_GET_CITY_BY_NAME = "http://api.openweathermap.org/geo/1.0/direct?q=%s&limit=5&appid=%s";
     private static final String HTTP_REQUEST_GET_WEATHER = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s&lang=en&units=metric";
+    private static final OpenWeatherMapService INSTANCE = new OpenWeatherMapService();
+    private OpenWeatherMapService(){}
+
+    public static OpenWeatherMapService getInstance() {
+        return INSTANCE;
+    }
 
     public WeatherDTO getWeather(Location location) throws URISyntaxException, IOException, InterruptedException {
         String cityReq = String.format(HTTP_REQUEST_GET_WEATHER, location.getLatitude(), location.getLongitude(), KEY);
