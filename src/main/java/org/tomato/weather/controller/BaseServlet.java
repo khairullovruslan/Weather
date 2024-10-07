@@ -37,12 +37,14 @@ public abstract class BaseServlet extends HttpServlet {
     @SneakyThrows
     protected void processTemplate(String templateName, HttpServletRequest request, HttpServletResponse response) {
         WebContext context = ThymeleafUtil.buildWebContext(request, response, getServletContext());
+        context.setVariable("context", request.getContextPath());
         log.info("Processing template: {}", templateName);
         templateEngine.process(templateName, context, response.getWriter());
     }
 
     @SneakyThrows
-    protected void processTemplate(WebContext context, String templateName, HttpServletResponse response) {
+    protected void processTemplate(WebContext context, String templateName, HttpServletRequest request, HttpServletResponse response) {
+        context.setVariable("context", request.getContextPath());
         templateEngine.process(templateName, context, response.getWriter());
     }
 
