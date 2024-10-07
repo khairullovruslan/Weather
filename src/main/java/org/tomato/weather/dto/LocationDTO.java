@@ -30,7 +30,7 @@ public class LocationDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LocationDTO that = (LocationDTO) o;
-        return Double.compare(lat, that.lat) == 0 && Double.compare(lon, that.lon) == 0 && Objects.equals(name, that.name) && Objects.equals(country, that.country);
+        return Double.compare(lat, that.lat) == 0 && Double.compare(lon, that.lon) == 0 && Objects.equals(name, that.name);
     }
 
     @Override
@@ -45,4 +45,6 @@ public class LocationDTO {
 
     private String country;
     private String state;
+
+    private boolean theUserHas;
 }
