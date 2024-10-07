@@ -55,4 +55,19 @@ public class LocationRepository extends BaseRepository<Long, Location> {
             transaction.commit();
         }
     }
+
+    public List<Location> findByUserAndName(Long id, String name) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            var cb = session.getCriteriaBuilder();
+            var criteria = cb.createQuery(Location.class);
+            var locationJpaRoot = criteria.from(Location.class);
+            criteria.select(locationJpaRoot)
+                    .where(cb.equal(locationJpaRoot.get("user").get("id"), id))
+                    .where(cb.like(locationJpaRoot.get("name"), name));
+            return session.createQuery(criteria).list();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
