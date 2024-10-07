@@ -45,7 +45,7 @@ public class CookieAndSessionService {
 
     }
 
-    public Cookie findAndUpdateSessionByUserId(User user) {
+    public Cookie findAndUpdateSessionByUserId(User user)  {
         Optional<Session> session = sessionRepository.findUpdateByUser(user);
         if (session.isPresent()){
             return new Cookie("SESSION_ID", session.get().getId());
@@ -74,6 +74,20 @@ public class CookieAndSessionService {
             return true;
         }
         return false;
+    }
+
+    public User findUserByCookie(Cookie[] cookies) {
+        for (Cookie cookie : cookies) {
+            if ("SESSION_ID".equals(cookie.getName())) {
+                Optional<Session> session = sessionRepository.findById(cookie.getValue());
+                if (session.isPresent()){
+                    return session.get().getUser();
+                }
+                throw new SessionNotFoundException();
+            }
+        }
+        throw new SessionNotFoundException();
+
     }
 
 }
