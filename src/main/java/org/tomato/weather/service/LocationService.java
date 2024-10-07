@@ -24,6 +24,9 @@ public class LocationService {
     public List<LocationDTO> findByUser(User user){
         return locationRepository.findByUserId(user.getId()).stream().map(this::locationToLocationDtoMapper).toList();
     }
+    public List<LocationDTO> findByUserAndName(User user, String name){
+        return locationRepository.findByUserAndName(user.getId(), name).stream().map(this::locationToLocationDtoMapper).toList();
+    }
 
     private Location locationDtoToLocationMapper(LocationDTO locationDTO, User user){
         return Location
