@@ -32,7 +32,7 @@ public class OpenWeatherMapServiceTest {
      void setUp() {
         httpClientMock = mock(HttpClient.class);
         httpResponseMock = mock(HttpResponse.class);
-        openWeatherApiService = new OpenWeatherMapService();
+        openWeatherApiService = OpenWeatherMapService.getInstance();
 
         try {
             var httpClientField = OpenWeatherMapService.class.getDeclaredField("httpClient");
