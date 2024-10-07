@@ -57,6 +57,7 @@ public class ExceptionHandler {
             }
         } catch (Exception notFoundException) {
             log.error("NOT FOUND EXCEPTION");
+            notFoundException.printStackTrace();
             // todo сделать перенаправление на /index
             throw new RuntimeException();
         }
