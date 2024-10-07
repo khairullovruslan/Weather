@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Локации</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Ваши выбранные локации</h1>
+    <div class="row">
+        <div class="col-md-4" th:each="entry : ${weathers}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${entry.key.name}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${entry.value.main.temp} + '°C'"></h6>
+
+                    <p class="card-text" th:if="${entry.key.state != null}"
+                       th:text="${entry.key.country} + ' - ' + ${entry.key.state}"></p>
+                    <p class="card-text" th:if="${entry.key.state == null}" th:text="${entry.key.country}"></p>
+                    <p class="card-text" th:text="${entry.value.weather[0].description}"></p>
+                    <p class="card-text">
+                        <strong>Ощущается как:</strong> <span th:text="${entry.value.main.feelsLike} + '°C'"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Скорость ветра:</strong> <span th:text="${entry.value.wind.speed} + ' м/с'"></span>
+                    </p>
+
+                    <button class="btn btn-primary saveWeatherBtn"
+                            th:data-name="${entry.key.name}"
+                            th:data-country="${entry.key.country}"
+                            th:data-state="${entry.key.state != null ? entry.key.state : ''}"
+                            th:data-lat="${entry.key.lat}"
+                            th:data-lon="${entry.key.lon}"
+                            th:data-path="${context}">
+                        удалить
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.saveWeatherBtn').on('click', function () {
+            const locationData = {
+                name: $(this).data('name'),
+                country: $(this).data('country'),
+                lat: $(this).data('lat'),
+                lon: $(this).data('lon'),
+                state: $(this).data('state')
+            };
+
+            const path = $(this).data('path') + '/home';
+
+            console.log(path);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(locationData),
+                success: function (response) {
+                    if (response && response.url) {
+                        window.location.href = response.url;
+                    } else {
+                        console.error('URL не найден в ответе:', response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ошибка:', status, error);
+                }
+            });
+
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
