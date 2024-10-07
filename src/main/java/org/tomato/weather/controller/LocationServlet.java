@@ -10,6 +10,7 @@ import org.thymeleaf.context.WebContext;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.User;
+import org.tomato.weather.exception.LocationIsEmptyException;
 import org.tomato.weather.exception.SessionNotFoundException;
 import org.tomato.weather.service.CookieAndSessionService;
 import org.tomato.weather.service.LocationService;
@@ -51,7 +52,7 @@ public class LocationServlet extends BaseServlet {
                 }
             }
 
-        } catch (SessionNotFoundException ignored) {
+        } catch (SessionNotFoundException | LocationIsEmptyException ignored) {
         }
 
         context.setVariable("weathers", weatherDTOS);
