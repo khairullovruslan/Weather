@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tomato.weather.controller.BaseServlet;
-import org.tomato.weather.service.AuthService;
+import org.tomato.weather.service.authServices.AuthService;
 
 import java.io.IOException;
 

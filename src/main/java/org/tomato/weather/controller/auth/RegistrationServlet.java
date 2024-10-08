@@ -10,7 +10,7 @@ import org.tomato.weather.controller.BaseServlet;
 import org.tomato.weather.dto.UserRegistrationDto;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.exception.authException.RegistrationException;
-import org.tomato.weather.service.AuthService;
+import org.tomato.weather.service.authServices.AuthService;
 import org.tomato.weather.util.PasswordUtil;
 import org.tomato.weather.util.UserUtils;
 

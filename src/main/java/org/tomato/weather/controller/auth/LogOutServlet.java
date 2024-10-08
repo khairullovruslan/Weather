@@ -6,8 +6,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.tomato.weather.service.AuthService;
-import org.tomato.weather.service.CookieAndSessionService;
+import org.tomato.weather.service.authServices.AuthService;
+import org.tomato.weather.service.authServices.CookieAndSessionService;
 
 import java.io.IOException;
 

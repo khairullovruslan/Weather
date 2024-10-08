@@ -10,7 +10,7 @@ import org.thymeleaf.context.WebContext;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.service.CookieAndSessionService;
+import org.tomato.weather.service.authServices.CookieAndSessionService;
 import org.tomato.weather.service.LocationService;
 import org.tomato.weather.service.OpenWeatherMapService;
 import org.tomato.weather.util.AjaxExceptionHandler;

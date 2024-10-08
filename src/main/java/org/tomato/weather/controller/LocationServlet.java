@@ -12,7 +12,7 @@ import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.exception.locationException.LocationIsEmptyException;
 import org.tomato.weather.exception.authException.SessionNotFoundException;
-import org.tomato.weather.service.CookieAndSessionService;
+import org.tomato.weather.service.authServices.CookieAndSessionService;
 import org.tomato.weather.service.LocationService;
 import org.tomato.weather.service.OpenWeatherMapService;
 import org.tomato.weather.util.AjaxExceptionHandler;

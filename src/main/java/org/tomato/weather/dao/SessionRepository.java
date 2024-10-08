@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.tomato.weather.dao.commons.BaseRepository;
 import org.tomato.weather.entity.Session;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.service.CookieAndSessionService;
+import org.tomato.weather.service.authServices.CookieAndSessionService;
 import org.tomato.weather.util.HibernateUtil;
 
 import java.time.LocalDate;

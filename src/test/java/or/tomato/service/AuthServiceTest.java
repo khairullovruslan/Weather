@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.tomato.weather.dto.UserRegistrationDto;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.exception.authException.LoginDuplicateException;
-import org.tomato.weather.service.AuthService;
+import org.tomato.weather.service.authServices.AuthService;
 
 import java.util.UUID;
 

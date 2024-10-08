@@ -1,4 +1,4 @@
-package org.tomato.weather.service;
+package org.tomato.weather.service.authServices;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

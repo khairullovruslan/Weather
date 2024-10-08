@@ -1,4 +1,4 @@
-package org.tomato.weather.service;
+package org.tomato.weather.service.authServices;
 
 import org.tomato.weather.dao.UserRepository;
 import org.tomato.weather.entity.User;
