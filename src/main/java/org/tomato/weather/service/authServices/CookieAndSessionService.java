@@ -64,7 +64,7 @@ public class CookieAndSessionService {
 
     }
     public boolean sessionIsValidate(Session session){
-        return LocalDateTime.now().isAfter(session.getExpiresAt());
+        return !LocalDateTime.now().isAfter(session.getExpiresAt());
     }
 
     public User findUserByCookie(Cookie[] cookies) {
