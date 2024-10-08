@@ -11,8 +11,8 @@ import org.tomato.weather.dto.UserRegistrationDto;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.exception.authException.RegistrationException;
 import org.tomato.weather.service.authServices.AuthService;
-import org.tomato.weather.util.PasswordUtil;
-import org.tomato.weather.util.UserUtils;
+import org.tomato.weather.util.authUtil.PasswordUtil;
+import org.tomato.weather.util.authUtil.UserUtils;
 
 import java.io.IOException;
 import java.util.Set;

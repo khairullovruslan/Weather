@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.tomato.weather.exception.authException.SessionNotFoundException;
 import org.tomato.weather.service.authServices.CookieAndSessionService;
-import org.tomato.weather.util.AuthFilterUtil;
+import org.tomato.weather.util.authUtil.AuthFilterUtil;
 import org.tomato.weather.util.ExceptionHandler;
 
 import java.io.IOException;

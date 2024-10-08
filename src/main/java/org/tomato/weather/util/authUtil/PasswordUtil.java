@@ -1,4 +1,4 @@
-package org.tomato.weather.util;
+package org.tomato.weather.util.authUtil;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 

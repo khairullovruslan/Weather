@@ -1,4 +1,4 @@
-package org.tomato.weather.util;
+package org.tomato.weather.util.authUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
