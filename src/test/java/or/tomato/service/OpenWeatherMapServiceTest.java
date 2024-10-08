@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.Location;
-import org.tomato.weather.exception.LocationNotFoundException;
-import org.tomato.weather.exception.LoginDuplicateException;
-import org.tomato.weather.exception.WeatherNotFoundException;
+import org.tomato.weather.exception.locationException.LocationNotFoundException;
+import org.tomato.weather.exception.locationException.WeatherNotFoundException;
 import org.tomato.weather.service.OpenWeatherMapService;
 
 import java.io.IOException;

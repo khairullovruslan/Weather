@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.tomato.weather.exception.*;
+import org.tomato.weather.exception.authException.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,7 @@
 package org.tomato.weather.util;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.tomato.weather.exception.LocationIsEmptyException;
-
-import java.net.http.HttpRequest;
+import org.tomato.weather.exception.locationException.LocationIsEmptyException;
 
 public class LocationUtil {
     private final static LocationUtil INSTANCE = new LocationUtil();

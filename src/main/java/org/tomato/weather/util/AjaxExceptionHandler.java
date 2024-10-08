@@ -2,13 +2,10 @@ package org.tomato.weather.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.ConstraintViolation;
 import lombok.SneakyThrows;
-import org.tomato.weather.exception.*;
+import org.tomato.weather.exception.authException.SessionNotFoundException;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AjaxExceptionHandler {
     private static final AjaxExceptionHandler INSTANCE = new AjaxExceptionHandler();

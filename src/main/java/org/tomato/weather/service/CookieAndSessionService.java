@@ -5,8 +5,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.tomato.weather.dao.SessionRepository;
 import org.tomato.weather.entity.Session;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.exception.SessionDuplicateException;
-import org.tomato.weather.exception.SessionNotFoundException;
+import org.tomato.weather.exception.authException.SessionDuplicateException;
+import org.tomato.weather.exception.authException.SessionNotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

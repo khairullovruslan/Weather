@@ -7,9 +7,9 @@ import org.tomato.weather.dao.SessionRepository;
 import org.tomato.weather.dao.UserRepository;
 import org.tomato.weather.dto.UserRegistrationDto;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.exception.LoginDuplicateException;
-import org.tomato.weather.exception.SessionDuplicateException;
-import org.tomato.weather.exception.WrongPasswordException;
+import org.tomato.weather.exception.authException.LoginDuplicateException;
+import org.tomato.weather.exception.authException.SessionDuplicateException;
+import org.tomato.weather.exception.authException.WrongPasswordException;
 import org.tomato.weather.util.PasswordUtil;
 
 public class AuthService {

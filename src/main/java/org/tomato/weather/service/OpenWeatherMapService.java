@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.dto.WeatherDTO;
 import org.tomato.weather.entity.Location;
-import org.tomato.weather.exception.LocationNotFoundException;
-import org.tomato.weather.exception.WeatherNotFoundException;
+import org.tomato.weather.exception.locationException.LocationNotFoundException;
+import org.tomato.weather.exception.locationException.WeatherNotFoundException;
 
 import java.io.IOException;
 import java.net.URI;

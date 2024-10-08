@@ -2,29 +2,19 @@ package or.tomato.service;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import or.tomato.HibernateUtil;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.criteria.JpaCriteriaQuery;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.tomato.weather.dto.UserRegistrationDto;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.exception.LoginDuplicateException;
-import org.tomato.weather.exception.RegistrationException;
+import org.tomato.weather.exception.authException.LoginDuplicateException;
 import org.tomato.weather.service.AuthService;
-import org.tomato.weather.util.UserUtils;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

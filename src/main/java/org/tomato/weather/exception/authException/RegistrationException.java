@@ -1,4 +1,4 @@
-package org.tomato.weather.exception;
+package org.tomato.weather.exception.authException;
 
 import jakarta.validation.ConstraintViolation;
 import lombok.Getter;

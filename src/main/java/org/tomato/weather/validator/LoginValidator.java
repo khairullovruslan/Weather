@@ -3,7 +3,7 @@ package org.tomato.weather.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.tomato.weather.exception.LoginNotFoundException;
+import org.tomato.weather.exception.authException.LoginNotFoundException;
 import org.tomato.weather.service.LoginService;
 import org.tomato.weather.validator.annotation.ValidLogin;
 

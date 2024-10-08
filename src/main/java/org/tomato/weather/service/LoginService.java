@@ -1,9 +1,8 @@
 package org.tomato.weather.service;
 
 import org.tomato.weather.dao.UserRepository;
-import org.tomato.weather.dto.UserDto;
 import org.tomato.weather.entity.User;
-import org.tomato.weather.exception.LoginNotFoundException;
+import org.tomato.weather.exception.authException.LoginNotFoundException;
 
 import java.util.Optional;
 
