@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.tomato.weather.exception.ServletInitializationException;
-import org.tomato.weather.util.ExceptionHandler;
+import org.tomato.weather.util.handlers.ExceptionHandler;
 import org.tomato.weather.util.ThymeleafUtil;
 
 import java.io.IOException;

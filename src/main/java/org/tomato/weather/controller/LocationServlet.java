@@ -15,7 +15,7 @@ import org.tomato.weather.exception.authException.SessionNotFoundException;
 import org.tomato.weather.service.authServices.CookieAndSessionService;
 import org.tomato.weather.service.LocationService;
 import org.tomato.weather.service.OpenWeatherMapService;
-import org.tomato.weather.util.AjaxExceptionHandler;
+import org.tomato.weather.util.handlers.AjaxExceptionHandler;
 import org.tomato.weather.util.AjaxUtil;
 import org.tomato.weather.util.LocationUtil;
 import org.tomato.weather.util.ThymeleafUtil;

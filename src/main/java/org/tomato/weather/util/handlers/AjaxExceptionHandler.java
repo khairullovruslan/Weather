@@ -1,4 +1,4 @@
-package org.tomato.weather.util;
+package org.tomato.weather.util.handlers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

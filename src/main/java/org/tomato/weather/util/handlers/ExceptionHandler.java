@@ -1,4 +1,4 @@
-package org.tomato.weather.util;
+package org.tomato.weather.util.handlers;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +10,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.tomato.weather.exception.*;
 import org.tomato.weather.exception.authException.*;
+import org.tomato.weather.util.ThymeleafUtil;
 
 import java.util.ArrayList;
 import java.util.List;

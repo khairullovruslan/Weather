@@ -12,7 +12,7 @@ import org.thymeleaf.TemplateEngine;
 import org.tomato.weather.exception.authException.SessionNotFoundException;
 import org.tomato.weather.service.authServices.CookieAndSessionService;
 import org.tomato.weather.util.authUtil.AuthFilterUtil;
-import org.tomato.weather.util.ExceptionHandler;
+import org.tomato.weather.util.handlers.ExceptionHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
