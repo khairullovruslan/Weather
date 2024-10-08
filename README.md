@@ -1,3 +1,7 @@
+
+<img width="386" alt="Снимок экрана 2024-10-08 в 12 34 15" src="https://github.com/user-attachments/assets/520b6ce6-fdaf-419f-8023-44b19ea2d8b4">
+<img width="912" alt="Снимок экрана 2024-10-08 в 12 39 08" src="https://github.com/user-attachments/assets/eeb54545-fabd-4489-baac-a3d0321326cd">
+
 # 🌦️ Weather Web Application
 
 Easily keep track of the weather in your favorite locations with our Weather Web Application. Register, save your preferred locations, and get real-time weather updates at your fingertips.
