@@ -1,12 +1,13 @@
 package org.tomato.weather.dao;
 
 import org.hibernate.Session;
+import org.tomato.weather.dao.commons.BaseRepository;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.util.HibernateUtil;
 
 import java.util.Optional;
 
-public class UserRepository extends BaseRepository<Long, User>{
+public class UserRepository extends BaseRepository<Long, User> {
     private UserRepository(Class<User> clazz) {
         super(clazz);
     }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tomato.weather.dao.commons.BaseRepository;
 import org.tomato.weather.entity.Session;
 import org.tomato.weather.entity.User;
 import org.tomato.weather.service.CookieAndSessionService;

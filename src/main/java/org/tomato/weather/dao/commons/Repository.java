@@ -1,4 +1,4 @@
-package org.tomato.weather.dao;
+package org.tomato.weather.dao.commons;
 
 import java.util.List;
 import java.util.Optional;

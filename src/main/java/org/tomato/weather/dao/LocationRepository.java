@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.tomato.weather.dao.commons.BaseRepository;
 import org.tomato.weather.dto.LocationDTO;
 import org.tomato.weather.entity.Location;
 import org.tomato.weather.entity.User;

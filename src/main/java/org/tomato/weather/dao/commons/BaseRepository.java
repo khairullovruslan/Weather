@@ -1,6 +1,5 @@
-package org.tomato.weather.dao;
+package org.tomato.weather.dao.commons;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.tomato.weather.util.HibernateUtil;
